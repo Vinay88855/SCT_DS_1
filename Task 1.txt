@@ -1,0 +1,28 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+data = pd.read_csv('/content/API_SP.POP.TOTL_DS2_en_csv_v2_31753.csv', skiprows=4)
+
+#Process data and calculate mean population by year
+Years = [str(year) for year in range (1998,2010)]
+mean_population_by_year = data[Years].mean()
+fig, axes = plt.subplots (2,1, figsize=(8,10))
+
+#Bar Chart
+sns.barplot(x=mean_population_by_year.index, y=mean_population_by_year.values, palette='husl', ax = axes[0])
+axes[0].set_title('Average Population by year (Bar Chart)')
+axes[0].set_xlabel('year')
+axes[0].set_ylabel('Average Population')
+axes[0].grid(True)
+
+#Histogram
+sns.histplot(mean_population_by_year,kde=False, color='green', edgecolor='black',ax=axes[1])
+axes[1].set_title('Distribution of Average Population (Histogram)')
+axes[1].set_xlabel('Average Population')
+axes[1].set_ylabel('Frequency')
+axes[1].grid(True)
+
+fig.subplots_adjust(hspace=1)
+plt.tight_layout()
+plt.show()
